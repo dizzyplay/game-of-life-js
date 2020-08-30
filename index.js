@@ -1,6 +1,6 @@
 import {Game} from './game.js';
 
-const game = new Game(10, 10);
+const game = new Game(64, 64);
 
 const pre = document.getElementById('pre');
 
