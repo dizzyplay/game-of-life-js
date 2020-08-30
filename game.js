@@ -1,4 +1,4 @@
-class Game {
+export class Game {
   constructor(width, height) {
     this.width = width;
     this.height = height;
@@ -24,14 +24,42 @@ class Game {
     }
     return count;
   }
+
+  tick() {
+    const next = Uint8Array.from(this.cells);
+    for (let i = 0; i < this.width; i++) {
+      for (let j = 0; j < this.height; j++) {
+        const neighbor = this.getNeighbor(i, j);
+        const idx = this.getIndex(i, j);
+        const cell = this.cells[idx];
+        if (cell === 0 && neighbor === 3) {
+          next[idx] = 1;
+        } else if ((cell === 1 && neighbor === 2) || neighbor === 3) {
+          next[idx] = 1;
+        } else {
+          next[idx] = 0;
+        }
+      }
+    }
+    this.cells = next;
+  }
+
   getIndex(row, col) {
     if (row >= this.height || col >= this.width)
       throw new Error('not valid col or row');
     return row * this.width + col;
     // 0 1 2
   }
-}
 
-const game = new Game(4, 4);
-console.log(game.cells);
-console.log(game.getNeighbor(1, 1));
+  render() {
+    let r = '';
+    for (let row = 0; row < this.height; row++) {
+      for (let col = 0; col < this.width; col++) {
+        const idx = this.getIndex(row, col);
+        r += this.cells[idx] ? '◾️' : '▫️';
+      }
+      r += '\n';
+    }
+    return r;
+  }
+}
