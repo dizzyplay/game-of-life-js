@@ -56,7 +56,7 @@ export class Game {
     for (let row = 0; row < this.height; row++) {
       for (let col = 0; col < this.width; col++) {
         const idx = this.getIndex(row, col);
-        r += this.cells[idx] ? '◾️' : '▫️';
+        r += this.cells[idx] ? '◼️️' : '◽️️';
       }
       r += '\n';
     }
